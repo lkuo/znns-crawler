@@ -9,7 +9,6 @@ class DynamoDBTable:
     def __init__(self, table_name, local_mode=False):
         if local_mode:
             dynamodb = boto3.resource('dynamodb', endpoint_url='http://localhost:8000')
-            # dynamodb = boto3.resource('dynamodb', endpoint_url='http://dynamodb-local:8000')
         else:
             dynamodb = boto3.resource('dynamodb')
         self.table = dynamodb.Table(table_name)

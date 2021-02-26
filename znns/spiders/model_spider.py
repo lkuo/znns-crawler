@@ -11,8 +11,8 @@ class ModelSpider(scrapy.Spider):
 
     def __init__(self):
         super(ModelSpider, self).__init__()
-        self.albums = Album(local_mode=True)
-        self.models = Model(local_mode=True)
+        self.albums = Album()
+        self.models = Model()
 
     def start_requests(self):
         for model in self.models.list():
