@@ -51,7 +51,7 @@ class ModelSpider(scrapy.Spider):
         album_id = meta['album_id']
 
         for url in self.get_images(response):
-            file_name = response.url.split('/')[-1]
+            file_name = url.split('/')[-1]
             yield File(path=os.path.join('albums', album_id, file_name), url=url, referer=response.url)
 
         if self.has_album_next_page(response):
