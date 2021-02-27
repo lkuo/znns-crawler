@@ -23,8 +23,8 @@ class ModelSpider(scrapy.Spider):
         model_name, profile_url = self.get_model_detail(response)
         if model['name'] is None:
             self.models.update(model['id'], {'name': model_name})
+            yield File(path=os.path.join('models', model['id'], CAPTION_FILE_NAME), url=profile_url, referer=response.url)
         meta = {'model_id': model['id']}
-        yield File(path=os.path.join('models', model['id'], CAPTION_FILE_NAME), url=profile_url, referer=response.url)
 
         if self.has_archive_more(response):
             yield response.follow(
