@@ -65,7 +65,7 @@ CONCURRENT_REQUESTS_PER_DOMAIN = 3
 ITEM_PIPELINES = {
     'znns.pipelines.ImagesDownloadPipeline': 100,
 }
-IMAGES_STORE = '/Users/liang/workspace/znns/data1'
+IMAGES_STORE = 's3://znns/'
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
