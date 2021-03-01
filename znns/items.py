@@ -10,7 +10,7 @@ class DynamoDBTable:
         if local_mode:
             dynamodb = boto3.resource('dynamodb', endpoint_url='http://localhost:8000')
         else:
-            dynamodb = boto3.resource('dynamodb')
+            dynamodb = boto3.resource('dynamodb', region_name='us-east-2')
         self.table = dynamodb.Table(table_name)
 
     def list(self, limit=100):
