@@ -150,5 +150,4 @@ gen
 
 .aws.env
 docker
-
 znns/settings.py
