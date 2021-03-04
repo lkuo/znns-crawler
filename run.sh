@@ -1,3 +1,3 @@
 #!/bin/bash
 
-scrapy crawl --logfile "./logs/$(date '+%Y-%m-%d_%H-%M-%S').logs" models && shutdown -P +3
+scrapy crawl -L INFO --logfile "./logs/$(date '+%Y-%m-%d_%H-%M-%S').logs" models && shutdown -P +3
