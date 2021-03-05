@@ -16,6 +16,5 @@ class ImagesDownloadPipeline(ImagesPipeline):
         }, meta=item)
 
     def item_completed(self, results, item, info):
-        # logging.info(results)
-        logging.info(item)
+        logging.info(results)
         return item
