@@ -1,6 +1,7 @@
 import os
 
 import scrapy
+
 from znns.items import Model, Album
 
 CAPTION_FILE_NAME = 'caption.jpg'
@@ -23,7 +24,8 @@ class ModelSpider(scrapy.Spider):
         model_name, profile_url = self.get_model_detail(response)
         if model['name'] is None:
             self.models.update(model['id'], {'name': model_name})
-            yield File(path=os.path.join('models', model['id'], CAPTION_FILE_NAME), url=profile_url, referer=response.url)
+            yield File(path=os.path.join('models', model['id'], CAPTION_FILE_NAME), url=profile_url,
+                       referer=response.url)
         meta = {'model_id': model['id']}
 
         if self.has_archive_more(response):
@@ -38,10 +40,11 @@ class ModelSpider(scrapy.Spider):
         for cover, album_name, url in self.get_albums(response):
             if self.albums.has(url):
                 continue
+            res = response.copy()
             album = self.albums.add(meta['model_id'], album_name, url)
-            yield File(path=os.path.join('albums', album['id'], CAPTION_FILE_NAME), url=cover, referer=response.url)
+            yield File(path=os.path.join('albums', album['id'], CAPTION_FILE_NAME), url=cover, referer=res.url)
             meta['album_id'] = album['id']
-            yield response.follow(url, self.parse_album, cb_kwargs=dict(meta=meta))
+            yield res.follow(url, self.parse_album, cb_kwargs=dict(meta=meta))
 
         if self.has_albums_next_page(response):
             next_page_url = self.get_albums_next_page_url(response)
