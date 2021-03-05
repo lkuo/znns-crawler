@@ -40,12 +40,13 @@ class ModelSpider(scrapy.Spider):
         for cover, album_name, url in self.get_albums(response):
             if self.albums.has(url):
                 continue
-            res = response.copy()
+            response_cp = response.copy()
             album = self.albums.add(meta['model_id'], album_name, url)
-            yield File(path=os.path.join('albums', album['id'], CAPTION_FILE_NAME), url=cover, referer=res.url)
-            meta['album_id'] = album['id']
-            meta['album_url'] = url
-            yield res.follow(url, self.parse_album, cb_kwargs=dict(meta=meta))
+            yield File(path=os.path.join('albums', album['id'], CAPTION_FILE_NAME), url=cover, referer=response_cp.url)
+            meta_cp = meta.copy()
+            meta_cp['album_id'] = album['id']
+            meta_cp['album_url'] = url
+            yield response_cp.follow(url, self.parse_album, cb_kwargs=dict(meta=meta_cp))
 
         if self.has_albums_next_page(response):
             next_page_url = self.get_albums_next_page_url(response)
